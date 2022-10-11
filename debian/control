@@ -1,0 +1,50 @@
+Source: libppi-perl
+Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
+Uploaders: Damyan Ivanov <dmn@debian.org>,
+           gregor herrmann <gregoa@debian.org>
+Section: perl
+Testsuite: autopkgtest-pkg-perl
+Priority: optional
+Build-Depends: debhelper-compat (= 12)
+Build-Depends-Indep: libclass-inspector-perl,
+                     libclone-perl,
+                     libencode-perl,
+                     libfile-remove-perl,
+                     libio-string-perl,
+                     liblist-moreutils-perl,
+                     libparams-util-perl,
+                     libscalar-list-utils-perl,
+                     libtask-weaken-perl,
+                     libtest-deep-perl,
+                     libtest-nowarnings-perl,
+                     libtest-object-perl,
+                     libtest-simple-perl,
+                     libtest-subcalls-perl,
+                     perl
+Standards-Version: 4.4.0
+Vcs-Browser: https://salsa.debian.org/perl-team/modules/packages/libppi-perl
+Vcs-Git: https://salsa.debian.org/perl-team/modules/packages/libppi-perl.git
+Homepage: https://metacpan.org/release/PPI
+
+Package: libppi-perl
+Architecture: all
+Depends: ${misc:Depends},
+         ${perl:Depends},
+         libclone-perl,
+         libio-string-perl,
+         liblist-moreutils-perl,
+         libparams-util-perl,
+         libscalar-list-utils-perl,
+         libtask-weaken-perl
+Recommends: libclass-xsaccessor-perl
+Description: module to parse, analyze and manipulate Perl code
+ PPI provides the ability to parse, analyze and manipulate Perl code without
+ actually executing the code, by implementing a lexer similar to what perl has
+ itself internally.
+ .
+ The purpose of PPI is not to parse Perl Code, but to parse Perl Documents. By
+ making this distinction and treating the problem this way, one could analyze
+ files containing Perl source code in isolation from any other resources and
+ without executing it, including other libraries. A significant feature of PPI
+ is the ability to analyze Perl source code without requiring an instance of
+ perl to run alongside or inside the parser.
