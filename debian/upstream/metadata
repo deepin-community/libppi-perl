@@ -1,6 +1,6 @@
 ---
 Archive: CPAN
-Bug-Database: https://github.com/adamkennedy/PPI/issues
-Contact: Adam Kennedy <adamk@cpan.org>
-Name: PPI
-Repository: https://github.com/adamkennedy/PPI
+Bug-Database: https://github.com/Perl-Critic/PPI/issues
+Bug-Submit: https://github.com/Perl-Critic/PPI/issues/new
+Repository: https://github.com/Perl-Critic/PPI.git
+Repository-Browse: https://github.com/Perl-Critic/PPI

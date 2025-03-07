@@ -2,13 +2,14 @@
 
 use lib 't/lib';
 use PPI::Test::pragmas;
-use Test::More 0.86 tests => 24 + ($ENV{AUTHOR_TESTING} ? 1 : 0);
-use File::Spec::Functions ':ALL';
-use File::Temp 'tempdir';
-use PPI;
-use PPI::Transform;
-use Scalar::Util 'refaddr';
-use File::Copy;
+
+use File::Copy qw( copy );
+use File::Spec::Functions qw( catdir catfile );
+use File::Temp qw( tempdir );
+use PPI ();
+use PPI::Transform ();
+use Scalar::Util qw( refaddr );
+use Test::More 0.86 tests => 26 + ($ENV{AUTHOR_TESTING} ? 1 : 0);
 
 #####################################################################
 # Begin Tests
@@ -105,7 +106,7 @@ like $@, qr/PPI::Transform does not implement the required ->document method/,
 # Test Transform class
 package MyCleaner;
 
-use Params::Util   qw{_INSTANCE};
+use Params::Util qw( _INSTANCE );
 use PPI::Transform ();
 
 our @ISA;
@@ -122,6 +123,8 @@ sub document {
 
 package Foo;
 
+use Helper 'safe_new';
+
 sub new {
 	bless { }, 'Foo';
 }
@@ -129,7 +132,7 @@ sub new {
 our $VALUE = '';
 
 sub get {
-	PPI::Document->new( \$VALUE );
+	safe_new \$VALUE;
 }
 
 sub set {

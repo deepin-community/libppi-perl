@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: PPI
-Upstream-Contact: Adam Kennedy <adamk@cpan.org>
+Upstream-Contact: Olaf Alders <olaf@wundercounter.com>
 Source: https://metacpan.org/release/PPI
 
 Files: *
@@ -27,7 +27,7 @@ Copyright: 2005, Chip Salzenberg <chip@debian.org>
  2007, Damyan Ivanov <dmn@debian.org>
  2007, Joey Hess <joeyh@debian.org>
  2008, Rene Mayorga <rmayorga@debian.org>
- 2008-2015, gregor herrmann <gregoa@debian.org>
+ 2008-2025, gregor herrmann <gregoa@debian.org>
  2009-2011, Jonathan Yu <jawnsy@cpan.org>
 License: Artistic or GPL-1+
 
