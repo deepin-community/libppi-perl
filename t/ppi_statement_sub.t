@@ -4,10 +4,11 @@
 
 use lib 't/lib';
 use PPI::Test::pragmas;
-use Test::More tests => 1240 + ($ENV{AUTHOR_TESTING} ? 1 : 0);
+use Test::More tests => 1297 + ($ENV{AUTHOR_TESTING} ? 1 : 0);
 
-use PPI;
-use PPI::Singletons '%KEYWORDS';
+use PPI ();
+use PPI::Singletons qw( %KEYWORDS );
+use Helper 'safe_new';
 
 NAME: {
 	for my $test (
@@ -30,8 +31,7 @@ NAME: {
 
 		subtest "'$code'", => sub {
 
-		my $Document = PPI::Document->new( \$code );
-		isa_ok( $Document, 'PPI::Document', "code" );
+		my $Document = safe_new \$code;
 
 		my ( $sub_statement, $dummy ) = $Document->schildren;
 		isa_ok( $sub_statement, 'PPI::Statement::Sub', "document child" );
@@ -55,13 +55,13 @@ LEXSUB: {
 		my $code = $test->{code};
 		my $type = $test->{type};
 
-		my $Document = PPI::Document->new( \$code );
-		isa_ok( $Document, 'PPI::Document', "$code: got document" );
+		my $Document = safe_new \$code;
 
 		my ( $sub_statement, $dummy ) = $Document->schildren();
 		isa_ok( $sub_statement, 'PPI::Statement::Sub', "$code: document child is a sub" );
 		is( $dummy, undef, "$code: document has exactly one child" );
 		is( $sub_statement->type, $type, "$code: type matches" );
+		is( $sub_statement->name, 'foo', "$code: name matches" );
 	}
 }
 
@@ -86,11 +86,11 @@ SUB_WORD_OPTIONAL: {
 	# not gobbled.
 	my $desc = 'regression: word+block not gobbling to statement terminator';
 	for my $word ( qw( AUTOLOAD DESTROY ) ) {
-		my $Document = PPI::Document->new( \"$word {} sub foo {}" );
+		my $Document = safe_new \"$word {} sub foo {}";
 		my $statements = $Document->find('Statement::Sub') || [];
 		is( scalar(@$statements), 2, "$desc for $word + sub" );
 	
-		$Document = PPI::Document->new( \"$word {} package;" );
+		$Document = safe_new \"$word {} package;";
 		$statements = $Document->find('Statement::Sub') || [];
 		is( scalar(@$statements), 1, "$desc for $word + package" );
 		$statements = $Document->find('Statement::Package') || [];
@@ -109,8 +109,7 @@ PROTOTYPE: {
 	) {
 		my ( $proto_text, $expected ) = @$test;
 
-		my $Document = PPI::Document->new( \"sub foo $proto_text {}" );
-		isa_ok( $Document, 'PPI::Document', "$proto_text got document" );
+		my $Document = safe_new \"sub foo $proto_text {}";
 
 		my ( $sub_statement, $dummy ) = $Document->schildren();
 		isa_ok( $sub_statement, 'PPI::Statement::Sub', "$proto_text document child is a sub" );
@@ -130,8 +129,7 @@ PROTOTYPE_LEXSUB: {
 	) {
 		my ( $proto_text, $expected ) = @$test;
 
-		my $Document = PPI::Document->new( \"my sub foo $proto_text {}" );
-		isa_ok( $Document, 'PPI::Document', "$proto_text got document" );
+		my $Document = safe_new \"my sub foo $proto_text {}";
 
 		my ( $sub_statement, $dummy ) = $Document->schildren();
 		isa_ok( $sub_statement, 'PPI::Statement::Sub', "$proto_text document child is a sub" );
@@ -151,8 +149,7 @@ BLOCK_AND_FORWARD: {
 		my $code = $test->{code};
 		my $block = $test->{block};
 
-		my $Document = PPI::Document->new( \$code );
-		isa_ok( $Document, 'PPI::Document', "$code: got document" );
+		my $Document = safe_new \$code;
 
 		my ( $sub_statement, $dummy ) = $Document->schildren();
 		isa_ok( $sub_statement, 'PPI::Statement::Sub', "$code: document child is a sub" );
@@ -181,8 +178,7 @@ RESERVED: {
 		my $code = $test->{code};
 		my $reserved = $test->{reserved};
 
-		my $Document = PPI::Document->new( \$code );
-		isa_ok( $Document, 'PPI::Document', "$code: got document" );
+		my $Document = safe_new \$code;
 
 		my ( $sub_statement, $dummy ) = $Document->schildren();
 		isa_ok( $sub_statement, 'PPI::Statement::Sub', "$code: document child is a sub" );
@@ -195,8 +191,7 @@ sub test_sub_as {
 	my ( $sub, $name, $followed_by ) = @_;
 
 	my $code     = "$sub$name$followed_by";
-	my $Document = PPI::Document->new( \$code );
-	isa_ok( $Document, 'PPI::Document', "$code: got document" );
+	my $Document = safe_new \$code;
 
 	my ( $sub_statement, $dummy ) = $Document->schildren;
 	isa_ok( $sub_statement, 'PPI::Statement::Sub', "$code: document child is a sub" );
@@ -274,7 +269,7 @@ sub test_subs {
 
 	subtest "'$code'", => sub {
 
-	my $Document = PPI::Document->new( \"$code 999;" );
+	my $Document = safe_new \"$code 999;";
 	is(     $Document->schildren, 2, "number of statements in document" );
 	isa_ok( $Document->schild(0), 'PPI::Statement::Sub', "entire code" );
 

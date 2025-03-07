@@ -5,37 +5,41 @@ Uploaders: Damyan Ivanov <dmn@debian.org>,
 Section: perl
 Testsuite: autopkgtest-pkg-perl
 Priority: optional
-Build-Depends: debhelper-compat (= 12)
-Build-Depends-Indep: libclass-inspector-perl,
-                     libclone-perl,
-                     libencode-perl,
-                     libfile-remove-perl,
-                     libio-string-perl,
-                     liblist-moreutils-perl,
-                     libparams-util-perl,
-                     libscalar-list-utils-perl,
-                     libtask-weaken-perl,
-                     libtest-deep-perl,
-                     libtest-nowarnings-perl,
-                     libtest-object-perl,
-                     libtest-simple-perl,
-                     libtest-subcalls-perl,
+Build-Depends: debhelper-compat (= 13)
+Build-Depends-Indep: libclass-inspector-perl <!nocheck>,
+                     libclone-perl <!nocheck>,
+                     libencode-perl <!nocheck>,
+                     libfile-remove-perl <!nocheck>,
+                     liblist-moreutils-perl <!nocheck>,
+                     libparams-util-perl <!nocheck>,
+                     libsafe-isa-perl <!nocheck>,
+                     libscalar-list-utils-perl <!nocheck>,
+                     libtask-weaken-perl <!nocheck>,
+                     libtest-nowarnings-perl <!nocheck>,
+                     libtest-object-perl <!nocheck>,
+                     libtest-simple-perl <!nocheck>,
+                     libtest-subcalls-perl <!nocheck>,
+                     libversion-perl <!nocheck>,
+                     libyaml-pp-perl <!nocheck>,
                      perl
-Standards-Version: 4.4.0
+Standards-Version: 4.7.0
 Vcs-Browser: https://salsa.debian.org/perl-team/modules/packages/libppi-perl
 Vcs-Git: https://salsa.debian.org/perl-team/modules/packages/libppi-perl.git
 Homepage: https://metacpan.org/release/PPI
+Rules-Requires-Root: no
 
 Package: libppi-perl
 Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
          libclone-perl,
-         libio-string-perl,
          liblist-moreutils-perl,
          libparams-util-perl,
+         libsafe-isa-perl,
          libscalar-list-utils-perl,
-         libtask-weaken-perl
+         libtask-weaken-perl,
+         libversion-perl,
+         libyaml-pp-perl
 Recommends: libclass-xsaccessor-perl
 Description: module to parse, analyze and manipulate Perl code
  PPI provides the ability to parse, analyze and manipulate Perl code without

@@ -1,5 +1,68 @@
 Revision history for Perl extension PPI
 
+1.281   2024-12-27 14:44:47Z
+	Summary:
+	- Implement support for signatures and other parsing features
+
+	Details:
+	- Framework for recognition of parsing feature activation via:
+	  - `use $PERL_VERSION` in code
+	  - `use feature` in code
+	  - `use $Common::CPAN::Module` in code
+	  - PPI::Document->new( feature_mods => ... )
+	  - PPI::Document->new( custom_feature_includes => ... )
+	  - PPI::Document->new( custom_feature_include_cb => ... )
+	  - $ENV{PPI_CUSTOM_FEATURE_INCLUDES}
+	- Added ability to parse features:
+	  - signatures, as PPI::Structure::Signature
+	  - try catch, as PPI::Statement::Compound
+
+1.279   2024-08-23 14:02:44Z
+	Summary:
+	- Implemented a cache to speed up sibling iteration
+	  (GH#287) (Graham Knop (haarg))
+
+1.278   2024-03-11 02:20:06Z
+	- Add support for new octal number syntax (GH#295) (Branislav Branislav
+      Zahradník)
+
+1.277   2023-09-22 09:12:48Z
+	Summary:
+	- Parse prototypes as literal quotes, enables parens and newlines in protos
+	- Fix false positive detection of labels (GH#289) (Dan Church)
+
+	Details:
+	- Wrapped most Document->new calls in tests with automatic checks
+
+1.276   2022-07-19 21:43:50Z
+	Summary:
+	- Implement Replace Method (GH#274) (Renee and Olaf Alders)
+
+1.275   2022-07-18 19:42:13Z
+	Summary:
+	- CHECK bareword handle parsed as scheduled block (GH#247) (trwyant)
+
+1.274   2022-05-02 18:21:56Z
+	Summary:
+	- Indentation in here-docs is now preserved (GH#252) (trwyant)
+
+1.273   2022-04-22 15:58:31Z
+	Summary:
+	- Whitespace in signatures is now preserved (GH#257)
+
+1.272   2022-02-02 16:10:50Z
+	Summary:
+	- Drop prerequisite for IO::String on perl 5.8+
+
+1.271   2022-01-25 21:47:21Z
+	Summary:
+	- return correct name for lexical subroutines
+	- silence uninitialized warning in t/07_token.t
+	- bump minimum Test::More version to 0.96
+	- fix some typos in Pod
+	- moved repository to Perl-Critic GitHub org:
+		https://github.com/Perl-Critic/PPI
+
 1.270   2019-07-09 15:14:57Z
 	Summary:
 	- attempt to handle new blead binary/hexadecimal parsing behavior in tests
@@ -573,7 +636,7 @@ Revision history for Perl extension PPI
 	- Fixed parsing of @{$foo}-1
 	- Fixed parsing of <$fh1>, <$fh2>
 
-1.199_04 
+1.199_04
 	Summary:
 	- Build tweaks
 	- More regression changes
